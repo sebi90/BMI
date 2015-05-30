@@ -15,11 +15,16 @@ public class MainActivity extends ActionBarActivity {
 
     public static final String Message = "Message";
     private static final int REQUEST_CODE = 1;
+    private double weight, height;
+    private TextView textWeight, textHeight, textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        textWeight= (TextView) findViewById(R.id.textViewWeight);
+        textHeight = (TextView) findViewById(R.id.textViewHeight);
+        textView = (TextView) findViewById(R.id.textViewResult);
     }
 
     @Override
@@ -53,32 +58,35 @@ public class MainActivity extends ActionBarActivity {
             String result = intent.getStringExtra(InputActivity.RESULT);
             if(weight_height)
             {
-                TextView textView = (TextView) findViewById(R.id.textViewHeight);
-                textView.setText(result);
+
+                if(result.length() != 0) {
+                    textHeight.setText(result + " cm");
+                    height = Double.parseDouble(result.toString());
+                }
+                else
+                {
+                    textHeight.setText("ungültige Eingabe");
+                }
             }
             else
             {
-                TextView textView = (TextView) findViewById(R.id.textViewWeight);
-                textView.setText(result);
+
+                if(result.length() != 0) {
+                    textWeight.setText(result + " kg");
+                    weight = Double.parseDouble(result.toString());
+                }
+                else
+                {
+                    textWeight.setText("ungültige Eingabe");
+                }
             }
 
         }
 
-        try
-        {
-            double weight = Double.parseDouble(((TextView) findViewById(R.id.textViewWeight)).getText().toString());
-            double height = Double.parseDouble(((TextView) findViewById(R.id.textViewHeight)).getText().toString());
-
             double result = (weight / (height * height)) *10000;
 
-            TextView textView = (TextView) findViewById(R.id.textViewResult);
+
             textView.setText("Der BMI-Wert beträgt: " + result);
-
-        }
-        catch (IllegalArgumentException e)
-        {
-
-        }
     }
 
 
@@ -95,5 +103,21 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("DISPLAY_TEXT_WEIGHT", textWeight.getText().toString());
+        outState.putString("DISPLAY_TEXT_HEIGHT", textHeight.getText().toString());
+        outState.putString("DISPLAY_TEXT", textView.getText().toString());
+
+    }
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        textWeight.setText(savedInstanceState.getString("DISPLAY_TEXT_WEIGHT"));
+        textHeight.setText(savedInstanceState.getString("DISPLAY_TEXT_HEIGHT"));
+        textView.setText(savedInstanceState.getString("DISPLAY_TEXT"));
     }
 }

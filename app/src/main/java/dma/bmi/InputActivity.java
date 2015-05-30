@@ -15,6 +15,8 @@ public class InputActivity extends ActionBarActivity {
     public static final String RESULT = "Result";
     public static final String WEIGHT_HEIGTH = "Weight_Height";
     Boolean message;
+    private EditText editText;
+    private TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +24,8 @@ public class InputActivity extends ActionBarActivity {
         setContentView(R.layout.activity_input);
         Intent intent = getIntent();
         message = intent.getBooleanExtra(MainActivity.Message, true);
-        TextView textView = (TextView) findViewById(R.id.textView);
+        textView = (TextView) findViewById(R.id.textView);
+        editText = (EditText) findViewById(R.id.resultText);
 
         if(message)
         {
@@ -43,7 +46,7 @@ public class InputActivity extends ActionBarActivity {
 
     public void clickResult(View view)
     {
-        EditText editText = (EditText) findViewById(R.id.resultText);
+
         String input = editText.getText().toString();
         Intent intent = getIntent();
         if(message)
@@ -73,5 +76,19 @@ public class InputActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("DISPLAY_EDITTEXT", editText.getText().toString());
+        outState.putString("DISPLAY_TEXTVIEW", textView.getText().toString());
+
+    }
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        editText.setText(savedInstanceState.getString("DISPLAY_EDITTEXT"));
+        textView.setText(savedInstanceState.getString("DISPLAY_TEXTVIEW"));
     }
 }
