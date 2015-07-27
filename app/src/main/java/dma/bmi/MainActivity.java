@@ -82,10 +82,7 @@ public class MainActivity extends ActionBarActivity {
             }
 
         }
-
-            double result = (weight / (height * height)) *10000;
-
-
+            double result = (weight / (height * height)) * 10000;
             textView.setText("Der BMI-Wert beträgt: " + result);
     }
 

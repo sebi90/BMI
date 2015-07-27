@@ -81,14 +81,12 @@ public class InputActivity extends ActionBarActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString("DISPLAY_EDITTEXT", editText.getText().toString());
         outState.putString("DISPLAY_TEXTVIEW", textView.getText().toString());
-
     }
+
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        editText.setText(savedInstanceState.getString("DISPLAY_EDITTEXT"));
         textView.setText(savedInstanceState.getString("DISPLAY_TEXTVIEW"));
     }
 }
